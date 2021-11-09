@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 public class BusTest {
 
   private Bus testBus;
-
   private Route testRouteIn;
   private Route testRouteOut;
 
