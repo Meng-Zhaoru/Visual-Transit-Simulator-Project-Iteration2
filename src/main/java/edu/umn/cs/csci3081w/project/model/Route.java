@@ -176,4 +176,29 @@ public class Route {
   public int getNextStopIndex() {
     return nextStopIndex;
   }
+
+  public List<Double> getDistances() {
+    return distances;
+  }
+
+  /**
+   * Check if two Route objects are same.
+   *
+   * @param route the route to be checked
+   * @return <code>true</code> if all the attributes of two objects are same,
+   *  <code>false</code> otherwise
+   */
+  public boolean equals(Route route) {
+    boolean stopsResult = true;
+    boolean distancesResult = true;
+    for (int i = 0; i < this.stops.size(); i++) {
+      stopsResult = stopsResult && (this.stops.get(i).equals(route.getStops().get(i)));
+    }
+    for (int i = 0; i < this.distances.size(); i++) {
+      distancesResult = distancesResult
+          && (this.distances.get(i).equals(route.getDistances().get(i)));
+    }
+    return (this.id == route.getId()) && (this.name == route.getName()) && (stopsResult)
+        && (distancesResult) && (this.generateNewPassengers() == route.generateNewPassengers());
+  }
 }

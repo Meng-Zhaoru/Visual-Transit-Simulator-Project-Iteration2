@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 public class TrainTest {
 
   private Train testTrain;
-
   private Route testRouteIn;
   private Route testRouteOut;
 
