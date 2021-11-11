@@ -120,6 +120,7 @@ public class ConfigManager {
           this.storageFacility.setTrainsNum(numTrains);
         }
       }
+
       scanner.close();
     } catch (Exception e) {
       e.printStackTrace();
