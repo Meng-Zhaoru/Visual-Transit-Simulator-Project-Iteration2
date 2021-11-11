@@ -18,7 +18,6 @@ public class VisualTransitSimulator {
   private int simulationTimeElapsed = 0;
   private Counter counter;
   private List<Line> lines;
-  private List<Route> routes;
   private List<Vehicle> activeVehicles;
   private List<Vehicle> completedTripVehicles;
   private List<Integer> vehicleStartTimings;
@@ -38,7 +37,6 @@ public class VisualTransitSimulator {
     ConfigManager configManager = new ConfigManager();
     configManager.readConfig(counter, configFile);
     this.lines = configManager.getLines();
-    this.routes = configManager.getRoutes();
     this.activeVehicles = new ArrayList<Vehicle>();
     this.completedTripVehicles = new ArrayList<Vehicle>();
     this.vehicleStartTimings = new ArrayList<Integer>();
@@ -50,8 +48,9 @@ public class VisualTransitSimulator {
 
     if (VisualTransitSimulator.LOGGING) {
       System.out.println("////Simulation Routes////");
-      for (int i = 0; i < routes.size(); i++) {
-        routes.get(i).report(System.out);
+      for (int i = 0; i < lines.size(); i++) {
+        lines.get(i).getOutboundRoute().report(System.out);
+        lines.get(i).getInboundRoute().report(System.out);
       }
     }
   }
@@ -84,8 +83,8 @@ public class VisualTransitSimulator {
     // generate vehicles
     for (int i = 0; i < timeSinceLastVehicle.size(); i++) {
       if (timeSinceLastVehicle.get(i) <= 0) {
-        Route outbound = routes.get(2 * i);
-        Route inbound = routes.get(2 * i + 1);
+        Route outbound = lines.get(i).getOutboundRoute();
+        Route inbound = lines.get(i).getInboundRoute();
         Line line = findLineBasedOnRoute(outbound);
         if (line.getType().equals(Line.BUS_LINE)) {
           if (storageFacility.getBusesNum() > 0) {
@@ -129,11 +128,14 @@ public class VisualTransitSimulator {
       }
     }
     // update routes
-    for (int i = 0; i < routes.size(); i++) {
-      Route currRoute = routes.get(i);
-      currRoute.update();
+    for (int i = 0; i < lines.size(); i++) {
+      Route currOutboundRoute = lines.get(i).getOutboundRoute();
+      Route currInboundRoute = lines.get(i).getInboundRoute();
+      currOutboundRoute.update();
+      currInboundRoute.update();
       if (VisualTransitSimulator.LOGGING) {
-        currRoute.report(System.out);
+        currOutboundRoute.report(System.out);
+        currInboundRoute.report(System.out);
       }
     }
   }
@@ -155,6 +157,11 @@ public class VisualTransitSimulator {
   }
 
   public List<Route> getRoutes() {
+    List<Route> routes = new ArrayList<>();
+    for(int i = 0; i < lines.size(); i ++){
+      routes.add(lines.get(i).getOutboundRoute());
+      routes.add(lines.get(i).getInboundRoute());
+    }
     return routes;
   }
 
