@@ -42,4 +42,6 @@ public abstract class Train extends Vehicle {
     out.println("####Train Info End####");
   }
 
+  public abstract int getCurrentCO2Emission();
+
 }

@@ -41,11 +41,7 @@ public abstract class Bus extends Vehicle {
     out.println("####Bus Info End####");
   }
 
-  /**
-   * co2 consumption for a bus.
-   *
-   * @return The current co2 consumption value
-  */
+  public abstract int getCurrentCO2Emission();
 
 
 }
