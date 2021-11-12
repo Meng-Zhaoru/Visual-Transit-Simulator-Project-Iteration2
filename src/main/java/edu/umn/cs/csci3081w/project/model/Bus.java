@@ -41,7 +41,6 @@ public abstract class Bus extends Vehicle {
     out.println("####Bus Info End####");
   }
 
+
   public abstract int getCurrentCO2Emission();
-
-
 }

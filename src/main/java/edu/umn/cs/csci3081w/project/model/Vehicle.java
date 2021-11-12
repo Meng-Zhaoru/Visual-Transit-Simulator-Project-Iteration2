@@ -143,7 +143,6 @@ public abstract class Vehicle {
    */
   public abstract int getCurrentCO2Emission();
 
-
   public int unloadPassengers() {
     return getPassengerUnloader().unloadPassengers(getPassengers(), nextStop);
   }

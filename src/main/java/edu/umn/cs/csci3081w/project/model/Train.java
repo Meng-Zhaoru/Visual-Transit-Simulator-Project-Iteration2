@@ -43,5 +43,4 @@ public abstract class Train extends Vehicle {
   }
 
   public abstract int getCurrentCO2Emission();
-
 }
