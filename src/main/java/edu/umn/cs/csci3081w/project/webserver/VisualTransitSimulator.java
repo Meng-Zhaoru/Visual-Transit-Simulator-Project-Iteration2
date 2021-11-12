@@ -1,13 +1,8 @@
 package edu.umn.cs.csci3081w.project.webserver;
 
 import com.google.gson.JsonObject;
-import edu.umn.cs.csci3081w.project.model.Bus;
-import edu.umn.cs.csci3081w.project.model.Counter;
-import edu.umn.cs.csci3081w.project.model.Line;
-import edu.umn.cs.csci3081w.project.model.Route;
-import edu.umn.cs.csci3081w.project.model.StorageFacility;
-import edu.umn.cs.csci3081w.project.model.Train;
-import edu.umn.cs.csci3081w.project.model.Vehicle;
+import edu.umn.cs.csci3081w.project.model.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +38,7 @@ public class VisualTransitSimulator {
     this.timeSinceLastVehicle = new ArrayList<Integer>();
     this.storageFacility = configManager.getStorageFacility();
     if (this.storageFacility == null) {
-      this.storageFacility = new StorageFacility(Integer.MAX_VALUE, Integer.MAX_VALUE);
+      this.storageFacility = new StorageFacility(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
     }
 
     if (VisualTransitSimulator.LOGGING) {
@@ -87,20 +82,30 @@ public class VisualTransitSimulator {
         Route inbound = lines.get(i).getInboundRoute();
         Line line = findLineBasedOnRoute(outbound);
         if (line.getType().equals(Line.BUS_LINE)) {
-          if (storageFacility.getBusesNum() > 0) {
+          if (storageFacility.getSmallBusesNum() > 0) {
             activeVehicles
-                .add(new Bus(counter.getBusIdCounterAndIncrement(), line.shallowCopy(),
-                    Bus.CAPACITY, Bus.SPEED));
-            this.storageFacility.decrementBusesNum();
+                .add(new SmallBus(counter.getSmallBusIdCounterAndIncrement(), line.shallowCopy(), SmallBus.SPEED));
+            this.storageFacility.decrementSmallBusesNum();
+          }
+          else if (storageFacility.getLargeBusesNum() > 0) {
+            activeVehicles
+                .add(new LargeBus(counter.getLargeBusIdCounterAndIncrement(), line.shallowCopy(), LargeBus.SPEED));
+            this.storageFacility.decrementLargeBusesNum();
           }
           timeSinceLastVehicle.set(i, vehicleStartTimings.get(i));
           timeSinceLastVehicle.set(i, timeSinceLastVehicle.get(i) - 1);
         } else if (line.getType().equals(Line.TRAIN_LINE)) {
-          if (storageFacility.getTrainsNum() > 0) {
+          if (storageFacility.getElectricTrainsNum() > 0) {
             activeVehicles
-                .add(new Train(counter.getTrainIdCounterAndIncrement(), line.shallowCopy(),
+                .add(new ElectricTrain(counter.getElectricTrainIdCounterAndIncrement(), line.shallowCopy(),
                     Train.CAPACITY, Train.SPEED));
-            this.storageFacility.decrementTrainsNum();
+            this.storageFacility.decrementElectricTrainsNum();
+          }
+          else if (storageFacility.getDieselTrainsNum() > 0) {
+            activeVehicles
+                .add(new DieselTrain(counter.getDieselTrainIdCounterAndIncrement(), line.shallowCopy(),
+                    Train.CAPACITY, Train.SPEED));
+            this.storageFacility.decrementDieselTrainsNum();
           }
           timeSinceLastVehicle.set(i, vehicleStartTimings.get(i));
           timeSinceLastVehicle.set(i, timeSinceLastVehicle.get(i) - 1);
@@ -116,10 +121,14 @@ public class VisualTransitSimulator {
       if (currVehicle.isTripComplete()) {
         Vehicle completedTripVehicle = activeVehicles.remove(i);
         completedTripVehicles.add(completedTripVehicle);
-        if (completedTripVehicle instanceof Bus) {
-          this.storageFacility.incrementBusesNum();
-        } else if (completedTripVehicle instanceof Train) {
-          this.storageFacility.incrementTrainsNum();
+        if (completedTripVehicle instanceof SmallBus) {
+          this.storageFacility.incrementSmallBusesNum();
+        } else if (completedTripVehicle instanceof LargeBus) {
+          this.storageFacility.incrementLargeBusesNum();
+        } else if (completedTripVehicle instanceof ElectricTrain) {
+          this.storageFacility.incrementElectricTrainsNum();
+        } else if (completedTripVehicle instanceof DieselTrain) {
+          this.storageFacility.incrementDieselTrainsNum();
         }
       } else {
         if (VisualTransitSimulator.LOGGING) {
