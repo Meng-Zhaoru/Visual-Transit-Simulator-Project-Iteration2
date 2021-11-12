@@ -23,8 +23,10 @@ public class ConfigManager {
   private static final String BUS_LINE = "BUS_LINE";
   private static final String TRAIN_LINE = "TRAIN_LINE";
   private static final String STORAGE_FACILITY_START = "STORAGE_FACILITY_START";
-  private static final String BUSES = "BUSES";
-  private static final String TRAINS = "TRAINS";
+  private static final String SMALL_BUSES = "SMALL_BUSES";
+  private static final String LARGE_BUSES = "LARGE_BUSES";
+  private static final String ELECTRIC_TRAINS = "ELECTRIC_TRAINS";
+  private static final String DIESEL_TRAINS = "DIESEL_TRAINS";
   private static final String STOP = "STOP";
 
   private List<Line> lines = new ArrayList<Line>();
@@ -112,12 +114,18 @@ public class ConfigManager {
               new Position(currStopLongitude, currStopLatitude)));
         } else if (chunk.equals(ConfigManager.STORAGE_FACILITY_START)) {
           this.storageFacility = new StorageFacility();
-        } else if (chunk.equals(ConfigManager.BUSES)) {
-          int numBuses = Integer.parseInt(splits[1].trim());
-          this.storageFacility.setBusesNum(numBuses);
-        } else if (chunk.equals(ConfigManager.TRAINS)) {
-          int numTrains = Integer.parseInt(splits[1].trim());
-          this.storageFacility.setTrainsNum(numTrains);
+        } else if (chunk.equals(ConfigManager.SMALL_BUSES)) {
+          int numSmallBuses = Integer.parseInt(splits[1].trim());
+          this.storageFacility.setSmallBusesNum(numSmallBuses);
+        } else if (chunk.equals(ConfigManager.LARGE_BUSES)) {
+          int numLargeBuses = Integer.parseInt(splits[1].trim());
+          this.storageFacility.setLargeBusesNum(numLargeBuses);
+        } else if (chunk.equals(ConfigManager.ELECTRIC_TRAINS)) {
+          int numElectricTrains = Integer.parseInt(splits[1].trim());
+          this.storageFacility.setElectricTrainsNum(numElectricTrains);
+        } else if (chunk.equals(ConfigManager.DIESEL_TRAINS)) {
+          int numDieselTrains = Integer.parseInt(splits[1].trim());
+          this.storageFacility.setDieselTrainsNum(numDieselTrains);
         }
       }
 

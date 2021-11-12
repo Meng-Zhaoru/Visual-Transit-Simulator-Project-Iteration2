@@ -2,7 +2,7 @@ package edu.umn.cs.csci3081w.project.model;
 
 import java.io.PrintStream;
 
-public class Train extends Vehicle {
+public abstract class Train extends Vehicle {
   public static final String TRAIN_VEHICLE = "TRAIN_VEHICLE";
   public static final double SPEED = 1;
   public static final int CAPACITY = 120;
@@ -42,9 +42,5 @@ public class Train extends Vehicle {
     out.println("####Train Info End####");
   }
 
-  public int getCurrentCO2Emission() {
-    return (2 * getPassengers().size()) + 5;
-  }
-
-
+  public abstract int getCurrentCO2Emission();
 }
