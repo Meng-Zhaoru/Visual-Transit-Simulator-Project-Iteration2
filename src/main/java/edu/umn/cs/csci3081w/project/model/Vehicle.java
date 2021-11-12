@@ -141,14 +141,7 @@ public abstract class Vehicle {
    *
    * @return The current co2 consumption value
    */
-  public int getCurrentCO2Emission() {
-    if(vehicleType == "TRAIN_VEHICLE") {
-      return (2 * getPassengers().size()) + 5;
-    }
-    else{
-      return (1 * getPassengers().size()) + 2;
-    }
-  }
+  public abstract int getCurrentCO2Emission();
 
   public int unloadPassengers() {
     return getPassengerUnloader().unloadPassengers(getPassengers(), nextStop);

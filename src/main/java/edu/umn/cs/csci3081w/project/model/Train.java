@@ -42,4 +42,9 @@ public class Train extends Vehicle {
     out.println("####Train Info End####");
   }
 
+  public int getCurrentCO2Emission() {
+    return (2 * getPassengers().size()) + 5;
+  }
+
+
 }

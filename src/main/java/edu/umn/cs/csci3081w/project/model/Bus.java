@@ -46,6 +46,9 @@ public class Bus extends Vehicle {
    *
    * @return The current co2 consumption value
   */
+  public int getCurrentCO2Emission() {
+    return (1 * getPassengers().size()) + 2;
+  }
 
 
 }
