@@ -1,8 +1,8 @@
 package edu.umn.cs.csci3081w.project.webserver;
 
-import com.google.gson.JsonObject;
 import edu.umn.cs.csci3081w.project.model.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +11,12 @@ public class VisualTransitSimulator {
   private static boolean LOGGING = false;
   private int numTimeSteps = 0;
   private int simulationTimeElapsed = 0;
+  private int currentTime = LocalDateTime.now().getHour();
   private Counter counter;
   private List<Line> lines;
   private List<Vehicle> activeVehicles;
+  private BusStrategyDay busStrategyDay;
+  private BusStrategyNight busStrategyNight;
   private List<Vehicle> completedTripVehicles;
   private List<Integer> vehicleStartTimings;
   private List<Integer> timeSinceLastVehicle;
@@ -32,6 +35,8 @@ public class VisualTransitSimulator {
     ConfigManager configManager = new ConfigManager();
     configManager.readConfig(counter, configFile);
     this.lines = configManager.getLines();
+    this.busStrategyDay = new BusStrategyDay();
+    this.busStrategyNight = new BusStrategyNight();
     this.activeVehicles = new ArrayList<Vehicle>();
     this.completedTripVehicles = new ArrayList<Vehicle>();
     this.vehicleStartTimings = new ArrayList<Integer>();
@@ -82,15 +87,27 @@ public class VisualTransitSimulator {
         Route inbound = lines.get(i).getInboundRoute();
         Line line = findLineBasedOnRoute(outbound);
         if (line.getType().equals(Line.BUS_LINE)) {
-          if (storageFacility.getSmallBusesNum() > 0) {
-            activeVehicles
-                .add(new SmallBus(counter.getSmallBusIdCounterAndIncrement(), line.shallowCopy(), SmallBus.SPEED));
-            this.storageFacility.decrementSmallBusesNum();
+          if(currentTime >= 8 && currentTime < 16){
+            if (storageFacility.getSmallBusesNum() > 0 && busStrategyDay.state == 0) {
+              Bus smallBus = busStrategyDay.deployBus(counter.getSmallBusIdCounterAndIncrement(), line.shallowCopy(), Bus.SPEED);
+              activeVehicles.add(smallBus);
+              this.storageFacility.decrementSmallBusesNum();
+            } else if (storageFacility.getLargeBusesNum() > 0 && busStrategyDay.state > 0) {
+              Bus largeBus = busStrategyDay.deployBus(counter.getLargeBusIdCounterAndIncrement(), line.shallowCopy(), Bus.SPEED);
+              activeVehicles.add(largeBus);
+              this.storageFacility.decrementLargeBusesNum();
+            }
           }
-          else if (storageFacility.getLargeBusesNum() > 0) {
-            activeVehicles
-                .add(new LargeBus(counter.getLargeBusIdCounterAndIncrement(), line.shallowCopy(), LargeBus.SPEED));
-            this.storageFacility.decrementLargeBusesNum();
+          else{
+            if (storageFacility.getSmallBusesNum() > 0 && busStrategyNight.state > 0) {
+              Bus smallBus = busStrategyNight.deployBus(counter.getSmallBusIdCounterAndIncrement(), line.shallowCopy(), Bus.SPEED);
+              activeVehicles.add(smallBus);
+              this.storageFacility.decrementSmallBusesNum();
+            } else if (storageFacility.getLargeBusesNum() > 0 && busStrategyNight.state == 0) {
+              Bus largeBus = busStrategyNight.deployBus(counter.getLargeBusIdCounterAndIncrement(), line.shallowCopy(), Bus.SPEED);
+              activeVehicles.add(largeBus);
+              this.storageFacility.decrementLargeBusesNum();
+            }
           }
           timeSinceLastVehicle.set(i, vehicleStartTimings.get(i));
           timeSinceLastVehicle.set(i, timeSinceLastVehicle.get(i) - 1);
