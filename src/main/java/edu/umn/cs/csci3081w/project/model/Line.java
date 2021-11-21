@@ -17,11 +17,11 @@ public class Line {
   /**
    * Constructor for a Line.
    *
-   * @param id       line identifier
-   * @param name     line name
-   * @param type     line type
+   * @param id            line identifier
+   * @param name          line name
+   * @param type          line type
    * @param outboundRoute outbound route
-   * @param inboundRoute    inbound route
+   * @param inboundRoute  inbound route
    */
   public Line(int id, String name, String type, Route outboundRoute, Route inboundRoute) {
     this.id = id;

@@ -1,12 +1,10 @@
 package edu.umn.cs.csci3081w.project.model;
 
-import edu.umn.cs.csci3081w.project.webserver.VisualTransitSimulator;
-
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Vehicle extends VehicleObserver{
+public abstract class Vehicle extends VehicleObserver {
   private int id;
   private int capacity;
   //the speed is in distance over a time unit
@@ -21,7 +19,7 @@ public abstract class Vehicle extends VehicleObserver{
   private Stop nextStop;
   private String vehicleType;
   private int timeToRestart;
-  private String ObservedText;
+  private String observedText = "";
   public int[] co2Array = {0, 0, 0, 0, 0};
   public boolean isLineIssued = false;
 
@@ -34,7 +32,8 @@ public abstract class Vehicle extends VehicleObserver{
    * @param loader   passenger loader for vehicle
    * @param unloader passenger unloader for vehicle
    */
-  public Vehicle(int id, int capacity, double speed, String vehicleType, Line line, PassengerLoader loader,
+  public Vehicle(int id, int capacity, double speed, String vehicleType,
+                 Line line, PassengerLoader loader,
                  PassengerUnloader unloader) {
     this.id = id;
     this.capacity = capacity;
@@ -65,7 +64,7 @@ public abstract class Vehicle extends VehicleObserver{
   }
 
   /**
-   * Moves the train on its route.
+   * Moves the vehicle on its route.
    */
   public void move() {
     // update passengers FIRST
@@ -136,17 +135,12 @@ public abstract class Vehicle extends VehicleObserver{
   }
 
   /**
-   * Update the simulation state for this train.
+   * Update the simulation state for this vehicle.
    */
   public void update() {
     move();
   }
 
-  /**
-   * co2 consumption for a train.
-   *
-   * @return The current co2 consumption value
-   */
   public abstract int getCurrentCO2Emission();
 
   public int unloadPassengers() {
@@ -246,7 +240,7 @@ public abstract class Vehicle extends VehicleObserver{
 
   public abstract void report(PrintStream out);
 
-  public void decreaseTimeToStart(){
+  public void decreaseTimeToStart() {
     this.timeToRestart--;
   }
 
@@ -255,27 +249,35 @@ public abstract class Vehicle extends VehicleObserver{
   }
 
   public String getObservedText() {
-    return ObservedText;
+    return observedText;
   }
 
   public int getTimeToRestart() {
     return timeToRestart;
   }
 
-  public void generateObservedText(){
+  /**
+   * Generate the observed text.
+   */
+  public void generateObservedText() {
     String type = "";
-    if(this.getVehicleType() == "BUS_VEHICLE"){
+    if (this.getVehicleType() == "BUS_VEHICLE") {
       type = "BUS";
-    }
-    else if(this.getVehicleType() == "TRAIN_VEHICLE"){
+    } else if (this.getVehicleType() == "TRAIN_VEHICLE") {
       type = "TRAIN";
     }
-    this.ObservedText =
+    this.observedText =
         "Vehicle " + this.getId() + System.lineSeparator()
             + "-----------------------------" + System.lineSeparator()
             + "*Type: " + type + System.lineSeparator()
-            + "*Position: (" + this.getPosition().getLongitude() + "," + this.getPosition().getLatitude() + ")" + System.lineSeparator()
+            + "*Position: (" + this.getPosition().getLongitude() + ","
+            + this.getPosition().getLatitude()
+            + ")" + System.lineSeparator()
             + "*Passengers: " + this.getPassengers().size() + System.lineSeparator()
-            + "*CO2: " + this.co2Array[0] + " " + this.co2Array[1] + " " + this.co2Array[2] + " " + this.co2Array[3] + " " + this.co2Array[4] + System.lineSeparator();
+            + "*CO2: " + this.co2Array[0] + " "
+            + this.co2Array[1] + " "
+            + this.co2Array[2] + " "
+            + this.co2Array[3] + " "
+            + this.co2Array[4] + System.lineSeparator();
   }
 }

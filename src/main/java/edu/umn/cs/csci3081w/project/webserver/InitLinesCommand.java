@@ -6,7 +6,6 @@ import edu.umn.cs.csci3081w.project.model.Line;
 import edu.umn.cs.csci3081w.project.model.Route;
 
 public class InitLinesCommand extends SimulatorCommand {
-
   private VisualTransitSimulator simulator;
 
   public InitLinesCommand(VisualTransitSimulator simulator) {

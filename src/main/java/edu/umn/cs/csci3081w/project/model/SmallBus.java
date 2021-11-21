@@ -8,7 +8,7 @@ public class SmallBus extends Bus {
    * Constructor for a bus.
    *
    * @param id       bus identifier
-   * @param line     route of in/out bound
+   * @param line     line of the bus
    * @param speed    speed of bus
    */
   public SmallBus(int id, Line line, double speed) {

@@ -6,6 +6,9 @@ public class StorageFacility {
   private int electricTrainsNum;
   private int dieselTrainsNum;
 
+  /**
+   * Constructor for a storage facility.
+   */
   public StorageFacility() {
     smallBusesNum = 0;
     largeBusesNum = 0;
@@ -13,7 +16,11 @@ public class StorageFacility {
     dieselTrainsNum = 0;
   }
 
-  public StorageFacility(int smallBusesNum, int largeBusesNum, int electricTrainsNum, int dieselTrainsNum ) {
+  /**
+   * Constructor for a storage facility.
+   */
+  public StorageFacility(int smallBusesNum, int largeBusesNum,
+                         int electricTrainsNum, int dieselTrainsNum) {
     this.smallBusesNum = smallBusesNum;
     this.largeBusesNum = largeBusesNum;
     this.electricTrainsNum = electricTrainsNum;
@@ -56,13 +63,17 @@ public class StorageFacility {
     smallBusesNum--;
   }
 
-  public void decrementLargeBusesNum() { largeBusesNum--; }
+  public void decrementLargeBusesNum() {
+    largeBusesNum--;
+  }
 
   public void decrementElectricTrainsNum() {
     electricTrainsNum--;
   }
 
-  public void decrementDieselTrainsNum() { dieselTrainsNum--; }
+  public void decrementDieselTrainsNum() {
+    dieselTrainsNum--;
+  }
 
   public void incrementSmallBusesNum() {
     smallBusesNum++;

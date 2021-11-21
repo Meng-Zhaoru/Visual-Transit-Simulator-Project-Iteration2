@@ -2,10 +2,10 @@ package edu.umn.cs.csci3081w.project.model;
 
 public class DieselTrain extends Train {
   /**
-   * Constructor for a train.
+   * Constructor for a diesel train.
    *
    * @param id       train identifier
-   * @param line     route of in/out bound
+   * @param line     line of the train
    * @param capacity capacity of the train
    * @param speed    speed of the train
    */

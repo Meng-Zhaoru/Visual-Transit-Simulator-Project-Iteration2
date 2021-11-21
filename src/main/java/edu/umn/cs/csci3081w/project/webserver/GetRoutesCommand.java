@@ -6,7 +6,6 @@ import edu.umn.cs.csci3081w.project.model.Route;
 import java.util.List;
 
 public class GetRoutesCommand extends SimulatorCommand {
-
   private VisualTransitSimulator simulator;
 
   public GetRoutesCommand(VisualTransitSimulator simulator) {

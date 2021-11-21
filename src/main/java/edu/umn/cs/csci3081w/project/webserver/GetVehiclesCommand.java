@@ -8,7 +8,6 @@ import edu.umn.cs.csci3081w.project.model.Vehicle;
 import java.util.List;
 
 public class GetVehiclesCommand extends SimulatorCommand {
-
   private VisualTransitSimulator simulator;
 
   public GetVehiclesCommand(VisualTransitSimulator simulator) {

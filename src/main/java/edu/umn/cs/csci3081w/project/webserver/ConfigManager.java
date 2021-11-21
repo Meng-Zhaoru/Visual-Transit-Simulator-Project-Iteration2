@@ -28,7 +28,6 @@ public class ConfigManager {
   private static final String ELECTRIC_TRAINS = "ELECTRIC_TRAINS";
   private static final String DIESEL_TRAINS = "DIESEL_TRAINS";
   private static final String STOP = "STOP";
-
   private List<Line> lines = new ArrayList<Line>();
   private List<Route> routes = new ArrayList<Route>();
   private StorageFacility storageFacility;
@@ -41,7 +40,7 @@ public class ConfigManager {
    * This method reads the configuration file, which contains information
    * about lines, routes, and stops.
    *
-   * @param counter counter for identifiers
+   * @param counter  counter for identifiers
    * @param fileName the file name of the configuration file
    */
   public void readConfig(Counter counter, String fileName) {
