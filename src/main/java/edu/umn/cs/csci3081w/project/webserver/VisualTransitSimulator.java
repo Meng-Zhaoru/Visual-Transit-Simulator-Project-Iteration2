@@ -83,7 +83,6 @@ public class VisualTransitSimulator {
     for (int i = 0; i < lines.size(); i++) {
       timeToRestart[i] = 10;
     }
-
     if (VisualTransitSimulator.LOGGING) {
       System.out.println("////Simulation Routes////");
       for (int i = 0; i < lines.size(); i++) {
