@@ -15,6 +15,7 @@ public class BusStrategyDay implements BuaStrategy {
     }
   }
 
+  @Override
   public int getState() {
     return state;
   }
