@@ -1,7 +1,7 @@
 package edu.umn.cs.csci3081w.project.model;
 
-public class BusStrategyNight {
-  public int state = 3;
+public class BusStrategyNight implements BuaStrategy {
+  private int state = 3;
   public BusFactory busFactory = new RandomBusFactory();
 
   public Bus deployBus(int id, Line line, double speed){
@@ -13,5 +13,10 @@ public class BusStrategyNight {
       state = 3;
       return busFactory.createLargeBus(id, line, speed);
     }
+  }
+
+  @Override
+  public int getState() {
+    return state;
   }
 }

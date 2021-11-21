@@ -1,7 +1,7 @@
 package edu.umn.cs.csci3081w.project.model;
 
-public class TrainStrategyNight {
-  public int state = 1;
+public class TrainStrategyNight implements TrainStrategy {
+  private int state = 1;
   public TrainFactory trainFactory  = new RandomTrainFactory();
 
   public Train deployTrain(int id, Line line, int capacity, double speed){
@@ -13,5 +13,10 @@ public class TrainStrategyNight {
       state = 1;
       return trainFactory.createDieselTrain(id, line, capacity, speed);
     }
+  }
+
+  @Override
+  public int getState() {
+    return state;
   }
 }
