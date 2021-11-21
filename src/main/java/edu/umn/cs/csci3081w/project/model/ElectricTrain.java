@@ -1,7 +1,6 @@
 package edu.umn.cs.csci3081w.project.model;
 
 public class ElectricTrain extends Train{
-  public static final String TRAIN_VEHICLE = "ELECTRIC_TRAIN_VEHICLE";
   public static final double SPEED = 1;
   public static final int CAPACITY = 120;
   /**

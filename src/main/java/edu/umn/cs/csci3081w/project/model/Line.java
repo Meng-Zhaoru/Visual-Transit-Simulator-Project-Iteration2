@@ -11,6 +11,8 @@ public class Line {
   private String type;
   private Route outboundRoute;
   private Route inboundRoute;
+  private int timeToRestart;
+  public boolean isLineIssued = false;
 
   /**
    * Constructor for a Line.
@@ -27,6 +29,7 @@ public class Line {
     this.type = type;
     this.outboundRoute = outboundRoute;
     this.inboundRoute = inboundRoute;
+    this.timeToRestart = 0;
   }
 
   /**
@@ -75,5 +78,17 @@ public class Line {
 
   public Route getInboundRoute() {
     return this.inboundRoute;
+  }
+
+  public int getTimeToRestart() {
+    return timeToRestart;
+  }
+
+  public void increaseTimeToStartBy(int timeToRestart) {
+    this.timeToRestart = timeToRestart;
+  }
+
+  public void decreaseTimeToRestart() {
+    this.timeToRestart--;
   }
 }

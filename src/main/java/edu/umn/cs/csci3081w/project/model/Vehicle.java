@@ -1,10 +1,12 @@
 package edu.umn.cs.csci3081w.project.model;
 
+import edu.umn.cs.csci3081w.project.webserver.VisualTransitSimulator;
+
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Vehicle {
+public abstract class Vehicle extends VehicleObserver{
   private int id;
   private int capacity;
   //the speed is in distance over a time unit
@@ -18,7 +20,10 @@ public abstract class Vehicle {
   private double distanceRemaining;
   private Stop nextStop;
   private String vehicleType;
-
+  private int timeToRestart;
+  private String ObservedText;
+  public int[] co2Array = {0, 0, 0, 0, 0};
+  public boolean isLineIssued = false;
 
   /**
    * Constructor for a vehicle.
@@ -44,6 +49,7 @@ public abstract class Vehicle {
     setName(line.getOutboundRoute().getName() + id);
     setPosition(new Position(nextStop.getPosition().getLongitude(),
         nextStop.getPosition().getLatitude()));
+    this.timeToRestart = 0;
   }
 
   public boolean isTripComplete() {
@@ -239,4 +245,37 @@ public abstract class Vehicle {
   }
 
   public abstract void report(PrintStream out);
+
+  public void decreaseTimeToStart(){
+    this.timeToRestart--;
+  }
+
+  public void increaseTimeToStartBy(int timeToRestart) {
+    this.timeToRestart += timeToRestart;
+  }
+
+  public String getObservedText() {
+    return ObservedText;
+  }
+
+  public int getTimeToRestart() {
+    return timeToRestart;
+  }
+
+  public void generateObservedText(){
+    String type = "";
+    if(this.getVehicleType() == "BUS_VEHICLE"){
+      type = "BUS";
+    }
+    else if(this.getVehicleType() == "TRAIN_VEHICLE"){
+      type = "TRAIN";
+    }
+    this.ObservedText =
+        "Vehicle " + this.getId() + System.lineSeparator()
+            + "-----------------------------" + System.lineSeparator()
+            + "*Type: " + type + System.lineSeparator()
+            + "*Position: (" + this.getPosition().getLongitude() + "," + this.getPosition().getLatitude() + ")" + System.lineSeparator()
+            + "*Passengers: " + this.getPassengers().size() + System.lineSeparator()
+            + "*CO2: " + this.co2Array[0] + " " + this.co2Array[1] + " " + this.co2Array[2] + " " + this.co2Array[3] + " " + this.co2Array[4] + System.lineSeparator();
+  }
 }
