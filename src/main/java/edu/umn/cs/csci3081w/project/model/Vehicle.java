@@ -21,7 +21,6 @@ public abstract class Vehicle extends VehicleObserver {
   private int timeToRestart;
   private String observedText = "";
   public int[] co2Array = {0, 0, 0, 0, 0};
-  public boolean isLineIssued = false;
 
   /**
    * Constructor for a vehicle.
@@ -274,10 +273,10 @@ public abstract class Vehicle extends VehicleObserver {
             + this.getPosition().getLatitude()
             + ")" + System.lineSeparator()
             + "*Passengers: " + this.getPassengers().size() + System.lineSeparator()
-            + "*CO2: " + this.co2Array[0] + " "
-            + this.co2Array[1] + " "
-            + this.co2Array[2] + " "
-            + this.co2Array[3] + " "
+            + "*CO2: " + this.co2Array[0] + ", "
+            + this.co2Array[1] + ", "
+            + this.co2Array[2] + ", "
+            + this.co2Array[3] + ", "
             + this.co2Array[4] + System.lineSeparator();
   }
 }

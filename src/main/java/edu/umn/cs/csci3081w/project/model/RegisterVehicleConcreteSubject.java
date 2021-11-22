@@ -11,5 +11,8 @@ public class RegisterVehicleConcreteSubject implements RegisterVehicleSubject {
     registerVehicle.generateObservedText();
   }
 
+  public VehicleObserver getRegisterVehicle() {
+    return registerVehicle;
+  }
 }
 

@@ -47,7 +47,6 @@ public class VisualTransitSimulator {
   private ObserveVehicleCommand observeVehicleCommand;
   private JsonObject registerCommand;
   private boolean updateRegisterInfo = false;
-  private int[] timeToRestart;
   public List<Integer> issueLineIdList = new ArrayList<>();
   public RegisterVehicleSubject registerVehicleSubject;
   public VehicleObserver registerVehicle;
@@ -78,10 +77,6 @@ public class VisualTransitSimulator {
     if (this.storageFacility == null) {
       this.storageFacility = new StorageFacility(Integer.MAX_VALUE,
           Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
-    }
-    this.timeToRestart = new int[lines.size()];
-    for (int i = 0; i < lines.size(); i++) {
-      timeToRestart[i] = 10;
     }
     if (VisualTransitSimulator.LOGGING) {
       System.out.println("////Simulation Routes////");

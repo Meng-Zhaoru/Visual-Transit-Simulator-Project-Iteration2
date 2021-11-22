@@ -1,9 +1,6 @@
 package edu.umn.cs.csci3081w.project.model;
 
 public class ElectricTrain extends Train {
-  public static final double SPEED = 1;
-  public static final int CAPACITY = 120;
-
   /**
    * Constructor for a electric train.
    *

@@ -139,6 +139,18 @@ public class VehicleTest {
 
   }
 
+  @Test
+  void testIncreaseTimeToStartBy() {
+    testVehicle.increaseTimeToStartBy(10);
+    assertEquals(testVehicle.getTimeToRestart(), 10);
+  }
+
+  @Test
+  void testDecreaseTimeToStart() {
+    testVehicle.decreaseTimeToStart();
+    assertEquals(testVehicle.getTimeToRestart(), -1);
+  }
+
   /**
    * Test if unloadPassengers works properly.
    */

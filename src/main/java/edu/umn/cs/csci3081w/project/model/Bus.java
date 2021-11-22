@@ -5,7 +5,6 @@ import java.io.PrintStream;
 public abstract class Bus extends Vehicle {
   public static final String BUS_VEHICLE = "BUS_VEHICLE";
   public static final double SPEED = 0.5;
-  public static final int CAPACITY = 60;
 
   /**
    * Constructor for a bus.

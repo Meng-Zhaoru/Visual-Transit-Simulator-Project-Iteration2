@@ -89,6 +89,16 @@ public class StopTest {
     assertEquals(1, stop.getPassengers().size());
   }
 
+  @Test
+  public void testUpdate() {
+    Stop stop = new Stop(0, "test stop", new Position(-93.243774, 44.972392));
+    assertEquals(stop.getPassengers().size(), 0);
+    Passenger passenger = new Passenger(1, "Goldy");
+    stop.addPassengers(passenger);
+    stop.update();
+    assertEquals(stop.getPassengers().get(0).getWaitAtStop(), 1);
+  }
+
   /**
    * Tests if passengers can be loaded onto an empty bus correctly from an empty stop
    * nothing should happen, loadPassengers returns 0.

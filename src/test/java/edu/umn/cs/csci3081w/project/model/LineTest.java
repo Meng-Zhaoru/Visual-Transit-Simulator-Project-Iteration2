@@ -175,6 +175,18 @@ public class LineTest {
     assertTrue(testLine.getInboundRoute().equals(shallowLine.getInboundRoute()));
   }
 
+  @Test
+  public void testIncreaseTimeToStartBy() {
+    testLine.increaseTimeToStartBy(10);
+    assertEquals(testLine.getTimeToRestart(), 10);
+  }
+
+  @Test
+  public void decreaseTimeToStart() {
+    testLine.decreaseTimeToRestart();
+    assertEquals(testLine.getTimeToRestart(), -1);
+  }
+
   /**
    * Clean up our variables after each test.
    */

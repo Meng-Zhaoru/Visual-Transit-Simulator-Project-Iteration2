@@ -5,4 +5,6 @@ public interface RegisterVehicleSubject {
   void registerVehicle(VehicleObserver registerVehicle);
 
   void notifyVehicle();
+
+  VehicleObserver getRegisterVehicle();
 }
