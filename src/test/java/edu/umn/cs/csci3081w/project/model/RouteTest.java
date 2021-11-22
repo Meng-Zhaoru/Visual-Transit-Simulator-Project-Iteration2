@@ -1,5 +1,9 @@
 package edu.umn.cs.csci3081w.project.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -10,8 +14,6 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class RouteTest {
 
@@ -259,7 +261,7 @@ public class RouteTest {
   }
 
   /**
-   * Check if equals works properly
+   * Check if equals works properly.
    */
   @Test
   public void testEquals() {

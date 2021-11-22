@@ -17,7 +17,12 @@ public class StorageFacility {
   }
 
   /**
-   * Constructor for a storage facility.
+   * Constructor for storage facility.
+   *
+   * @param smallBusesNum     small bus number
+   * @param largeBusesNum     large bus number
+   * @param electricTrainsNum electric train number
+   * @param dieselTrainsNum   diesel train number
    */
   public StorageFacility(int smallBusesNum, int largeBusesNum,
                          int electricTrainsNum, int dieselTrainsNum) {

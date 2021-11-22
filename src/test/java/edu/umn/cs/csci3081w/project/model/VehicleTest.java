@@ -1,12 +1,12 @@
 package edu.umn.cs.csci3081w.project.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class VehicleTest {
   private Vehicle testVehicle;
@@ -52,7 +52,7 @@ public class VehicleTest {
   }
 
   /**
-   * Test states after using constructor
+   * Test states after using constructor.
    */
   @Test
   public void testConstructor() {

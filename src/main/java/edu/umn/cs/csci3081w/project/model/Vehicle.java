@@ -25,11 +25,13 @@ public abstract class Vehicle extends VehicleObserver {
   /**
    * Constructor for a vehicle.
    *
-   * @param id       vehicle identifier
-   * @param capacity vehicle capacity
-   * @param speed    vehicle speed
-   * @param loader   passenger loader for vehicle
-   * @param unloader passenger unloader for vehicle
+   * @param id          vehicle identifier
+   * @param capacity    vehicle capacity
+   * @param speed       vehicle speed
+   * @param vehicleType vehicle type
+   * @param line        vehicle line
+   * @param loader      passenger loader for vehicle
+   * @param unloader    passenger unloader for vehicle
    */
   public Vehicle(int id, int capacity, double speed, String vehicleType,
                  Line line, PassengerLoader loader,
