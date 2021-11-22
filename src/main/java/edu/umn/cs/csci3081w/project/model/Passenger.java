@@ -33,6 +33,10 @@ public class Passenger {
     }
   }
 
+  public String getName() {
+    return name;
+  }
+
   public void setOnVehicle() {
     timeOnVehicle = 1;
   }
@@ -65,5 +69,18 @@ public class Passenger {
 
   public int getTimeOnVehicle() {
     return timeOnVehicle;
+  }
+
+  /**
+   * Compares two Passenger objects.
+   * check if all the attributes of these two objects are same
+   * @param pas the passenger that is going to be compared
+   * @return <code>true</code> if it's the same object, <code>false</code> otherwise
+   */
+  public boolean equals(Passenger pas) {
+    return (pas.getDestination() == this.destinationStopId)
+        && (pas.getName().equals(this.name))
+        && (pas.getWaitAtStop() == this.waitAtStop)
+        && (pas.getTimeOnVehicle() == this.timeOnVehicle);
   }
 }

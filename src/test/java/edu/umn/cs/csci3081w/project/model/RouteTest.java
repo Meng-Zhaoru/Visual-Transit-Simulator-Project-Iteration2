@@ -1,8 +1,5 @@
 package edu.umn.cs.csci3081w.project.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -13,6 +10,8 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RouteTest {
 
@@ -257,6 +256,15 @@ public class RouteTest {
     // making sure that the stops are being iterated
     assertEquals(0, testRouteIn.getStops().get(1).getPassengers().get(0).getTimeOnVehicle());
     assertEquals(1, testRouteIn.getStops().get(1).getPassengers().get(0).getWaitAtStop());
+  }
+
+  /**
+   * Check if equals works properly
+   */
+  @Test
+  public void testEquals() {
+    Route route = simpleTestRouteIn.shallowCopy();
+    assertTrue(simpleTestRouteIn.equals(route));
   }
 
   /**

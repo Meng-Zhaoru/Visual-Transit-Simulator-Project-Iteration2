@@ -177,28 +177,26 @@ public class Route {
     return nextStopIndex;
   }
 
+  public PassengerGenerator getPassengerGenerator() {
+    return generator;
+  }
+
   public List<Double> getDistances() {
     return distances;
   }
 
   /**
-   * Check if two Route objects are same.
-   *
-   * @param route the route to be checked
-   * @return <code>true</code> if all the attributes of two objects are same,
-   *  <code>false</code> otherwise
+   * Compares two Route objects.
+   * check if all the attributes of the two objects are same
+   * @param route the route that is going to be compared
+   * @return <code>true</code> if two objects are same, <code>false</code> otherwise
    */
   public boolean equals(Route route) {
-    boolean stopsResult = true;
-    boolean distancesResult = true;
-    for (int i = 0; i < this.stops.size(); i++) {
-      stopsResult = stopsResult && (this.stops.get(i).equals(route.getStops().get(i)));
-    }
-    for (int i = 0; i < this.distances.size(); i++) {
-      distancesResult = distancesResult
-          && (this.distances.get(i).equals(route.getDistances().get(i)));
-    }
-    return (this.id == route.getId()) && (this.name == route.getName()) && (stopsResult)
-        && (distancesResult) && (this.generateNewPassengers() == route.generateNewPassengers());
+    return (route.getId() == this.id)
+        && (route.getName().equals(this.name))
+        && (route.getStops().equals(this.stops))
+        && (route.getDistances().equals(this.distances))
+        && (route.getPassengerGenerator().equals(this.generator));
+
   }
 }

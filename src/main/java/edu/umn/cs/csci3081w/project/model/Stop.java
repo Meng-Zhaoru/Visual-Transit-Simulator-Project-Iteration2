@@ -93,7 +93,6 @@ public class Stop {
     return id;
   }
 
-
   public String getName() {
     return name;
   }
@@ -106,15 +105,4 @@ public class Stop {
     return passengers;
   }
 
-  /**
-   * Check if two stop objects are same.
-   *
-   * @param stop the stop to be checked
-   * @return <code>true</code> if two stop objects are same, <code>false</code> otherwise
-   */
-  public boolean equals(Stop stop) {
-    return (this.id == stop.getId()) && (this.name == stop.getName())
-        && (this.position.getLongitude() == stop.position.getLongitude())
-        && (this.position.getLatitude() == stop.position.getLatitude());
-  }
 }

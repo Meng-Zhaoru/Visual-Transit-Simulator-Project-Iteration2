@@ -11,19 +11,25 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
 public class LineTest {
+
   private Route testRouteOut;
   private Route testRouteIn;
+  private Line testLine;
   private Route simpleTestRouteOut;
   private Route simpleTestRouteIn;
-  private Line testLine;
   private Line simpleTestLine;
 
+  /**
+   * Setup operations before each test runs.
+   */
   @BeforeEach
-  void setUp() {
+  public void setUp() {
     PassengerFactory.DETERMINISTIC = true;
     PassengerFactory.DETERMINISTIC_NAMES_COUNT = 0;
     PassengerFactory.DETERMINISTIC_DESTINATION_COUNT = 0;
@@ -62,24 +68,11 @@ public class LineTest {
     testRouteIn = new Route(11, "testRouteIn",
         stopsIn, distancesIn, generatorIn);
 
-    testLine = new Line(1, "testLine", "BUS", testRouteOut, testRouteIn);
-
-    List<Stop> simpleStopsOut = new ArrayList<>();
-    Stop simpleStop1 = new Stop(0, "test stop 1", new Position(-93.243774, 44.972392));
-    simpleStopsOut.add(simpleStop1);
-    List<Double> simpleDistancesOut = new ArrayList<>();
-    simpleDistancesOut.add(0.961379387775189);
-    List<Double> simpleProbabilitiesOut = new ArrayList<Double>();
-    simpleProbabilitiesOut.add(.5);
-    PassengerGenerator simpleGeneratorOut = new RandomPassengerGenerator(simpleStopsOut,
-        simpleProbabilitiesOut);
-
-    simpleTestRouteOut = new Route(0, "simpleTestRouteOut",
-        simpleStopsOut, simpleDistancesOut, simpleGeneratorOut);
+    testLine = new Line(23, "testLine", "BUS", testRouteOut, testRouteIn);
 
     List<Stop> simpleStopsIn = new ArrayList<Stop>();
-    Stop simpleStop2 = new Stop(0, "test stop 2", new Position(-93.243774, 44.972392));
-    simpleStopsIn.add(simpleStop2);
+    Stop simpleStop1 = new Stop(0, "test stop", new Position(-93.243774, 44.972392));
+    simpleStopsIn.add(simpleStop1);
     List<Double> simpleDistancesIn = new ArrayList<>();
     simpleDistancesIn.add(0.961379387775189);
     List<Double> simpleProbabilitiesIn = new ArrayList<Double>();
@@ -87,31 +80,30 @@ public class LineTest {
     PassengerGenerator simpleGeneratorIn = new RandomPassengerGenerator(simpleStopsIn,
         simpleProbabilitiesIn);
 
+    simpleTestRouteOut = new Route(0, "simpleTestRouteIn",
+        simpleStopsIn, simpleDistancesIn, simpleGeneratorIn);
+
     simpleTestRouteIn = new Route(0, "simpleTestRouteIn",
         simpleStopsIn, simpleDistancesIn, simpleGeneratorIn);
 
-    simpleTestLine = new Line(0, "simpleTestLine", "BUS", simpleTestRouteOut, simpleTestRouteIn);
+    simpleTestLine = new Line(24, "simpleTestLine", "BUS", simpleTestRouteOut, simpleTestRouteIn);
   }
 
+  /**
+   * Testing state after using constructor.
+   */
   @Test
-  public void testConstructorNormal() {
-    assertEquals(1, testLine.getId());
+  public void testConstructor() {
+    assertEquals(23, testLine.getId());
     assertEquals("testLine", testLine.getName());
     assertEquals("BUS", testLine.getType());
     assertEquals(testRouteOut, testLine.getOutboundRoute());
     assertEquals(testRouteIn, testLine.getInboundRoute());
   }
 
-  @Test
-  public void testShallowCopy() {
-    Line shallowLine = testLine.shallowCopy();
-    assertEquals(testLine.getId(), shallowLine.getId());
-    assertEquals(testLine.getName(), shallowLine.getName());
-    assertEquals(testLine.getType(), shallowLine.getType());
-    assertTrue(testLine.getOutboundRoute().equals(shallowLine.getOutboundRoute()));
-    assertTrue(testLine.getInboundRoute().equals(shallowLine.getInboundRoute()));
-  }
-
+  /**
+   * Test reporting functionality.
+   */
   @Test
   public void testReport() {
     try {
@@ -125,18 +117,18 @@ public class LineTest {
       outputStream.close();
       String strToCompare =
           "====Line Info Start====" + System.lineSeparator()
-              + "ID: 0" + System.lineSeparator()
+              + "ID: 24" + System.lineSeparator()
               + "Name: simpleTestLine" + System.lineSeparator()
               + "Type: BUS" + System.lineSeparator()
               + "####Route Info Start####" + System.lineSeparator()
               + "ID: 0" + System.lineSeparator()
-              + "Name: simpleTestRouteOut" + System.lineSeparator()
+              + "Name: simpleTestRouteIn" + System.lineSeparator()
               + "Num stops: 1" + System.lineSeparator()
               + "****Stops Info Start****" + System.lineSeparator()
               + "++++Next Stop Info Start++++" + System.lineSeparator()
               + "####Stop Info Start####" + System.lineSeparator()
               + "ID: 0" + System.lineSeparator()
-              + "Name: test stop 1" + System.lineSeparator()
+              + "Name: test stop" + System.lineSeparator()
               + "Position: 44.972392,-93.243774" + System.lineSeparator()
               + "****Passengers Info Start****" + System.lineSeparator()
               + "Num passengers waiting: 0" + System.lineSeparator()
@@ -153,7 +145,7 @@ public class LineTest {
               + "++++Next Stop Info Start++++" + System.lineSeparator()
               + "####Stop Info Start####" + System.lineSeparator()
               + "ID: 0" + System.lineSeparator()
-              + "Name: test stop 2" + System.lineSeparator()
+              + "Name: test stop" + System.lineSeparator()
               + "Position: 44.972392,-93.243774" + System.lineSeparator()
               + "****Passengers Info Start****" + System.lineSeparator()
               + "Num passengers waiting: 0" + System.lineSeparator()
@@ -163,20 +155,36 @@ public class LineTest {
               + "****Stops Info End****" + System.lineSeparator()
               + "####Route Info End####" + System.lineSeparator()
               + "====Line Info End====" + System.lineSeparator();
-
       assertEquals(data, strToCompare);
     } catch (IOException ioe) {
       fail();
     }
   }
 
+  /**
+   * Test for the shallowCopy function.
+   * check if the function returns the expected shallow copy of the Line
+   */
+  @Test
+  public void testShallowCopy() {
+    Line shallowLine = testLine.shallowCopy();
+    assertEquals(testLine.getId(), shallowLine.getId());
+    assertEquals(testLine.getName(), shallowLine.getName());
+    assertEquals(testLine.getType(), shallowLine.getType());
+    assertTrue(testLine.getOutboundRoute().equals(shallowLine.getOutboundRoute()));
+    assertTrue(testLine.getInboundRoute().equals(shallowLine.getInboundRoute()));
+  }
 
-
+  /**
+   * Clean up our variables after each test.
+   */
+  @AfterEach
+  public void cleanUpEach() {
+    testRouteOut = null;
+    testRouteIn = null;
+    testLine = null;
+    simpleTestRouteOut = null;
+    simpleTestRouteIn = null;
+    simpleTestLine = null;
+  }
 }
-
-
-
-
-
-
-

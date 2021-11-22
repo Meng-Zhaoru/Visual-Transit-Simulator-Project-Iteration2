@@ -1,23 +1,18 @@
 package edu.umn.cs.csci3081w.project.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class VehicleTest {
-  private Bus testVehicle;
+  private Vehicle testVehicle;
   private Route testRouteIn;
   private Route testRouteOut;
+  private Line testLine;
 
   /**
    * Setup operations before each test runs.
@@ -52,18 +47,123 @@ public class VehicleTest {
     testRouteOut = new Route(1, "testRouteOut",
         stopsOut, distancesOut, generatorOut);
 
-    testVehicle = new SmallBus(1, new Line(10000, "testLine", "SMALL_BUS", testRouteOut, testRouteIn), 0.5);
+    testLine = new Line(10000, "testLine", "BUS_LINE", testRouteOut, testRouteIn);
+    testVehicle = new SmallBus(1, testLine, 1);
   }
 
   /**
-   * Test stats after using constructor
+   * Test states after using constructor
    */
   @Test
   public void testConstructor() {
     assertEquals(1, testVehicle.getId());
     assertEquals(20, testVehicle.getCapacity());
-    assertEquals(0.5, testVehicle.getSpeed());
-    assertEquals("SMALL_BUS", testVehicle.getVehicleType());
+    assertEquals(1, testVehicle.getSpeed());
+    assertEquals("BUS_VEHICLE", testVehicle.getVehicleType());
+    assertEquals(testLine, testVehicle.getLine());
+    assertEquals(0, testVehicle.getDistanceRemaining());
+    assertEquals("testRouteOut1", testVehicle.getName());
+    assertEquals(0, testVehicle.getTimeToRestart());
+  }
+
+  /**
+   * Tests if testIsTripComplete function works properly.
+   */
+  @Test
+  public void testIsTripComplete() {
+    assertEquals(false, testVehicle.isTripComplete());
+    testVehicle.move();
+    testVehicle.move();
+    testVehicle.move();
+    testVehicle.move();
+    assertEquals(true, testVehicle.isTripComplete());
+  }
+
+  /**
+   * Tests if loadPassenger function works properly.
+   */
+  @Test
+  public void testLoadPassenger() {
+    Passenger testPassenger1 = new Passenger(3, "testPassenger1");
+    Passenger testPassenger2 = new Passenger(2, "testPassenger2");
+    Passenger testPassenger3 = new Passenger(1, "testPassenger3");
+    Passenger testPassenger4 = new Passenger(1, "testPassenger4");
+
+    assertEquals(1, testVehicle.loadPassenger(testPassenger1));
+    assertEquals(1, testVehicle.loadPassenger(testPassenger2));
+    assertEquals(1, testVehicle.loadPassenger(testPassenger3));
+    assertEquals(1, testVehicle.loadPassenger(testPassenger4));
+  }
+
+
+  /**
+   * Tests if move function works properly.
+   */
+  @Test
+  public void testMove() {
+
+    assertEquals("test stop 2", testVehicle.getNextStop().getName());
+    assertEquals(1, testVehicle.getNextStop().getId());
+    testVehicle.move();
+    assertEquals("test stop 1", testVehicle.getNextStop().getName());
+    assertEquals(0, testVehicle.getNextStop().getId());
+    testVehicle.move();
+    assertEquals("test stop 1", testVehicle.getNextStop().getName());
+    assertEquals(0, testVehicle.getNextStop().getId());
+    testVehicle.move();
+    assertEquals("test stop 2", testVehicle.getNextStop().getName());
+    assertEquals(1, testVehicle.getNextStop().getId());
+    testVehicle.move();
+    assertEquals(null, testVehicle.getNextStop());
+  }
+
+  /**
+   * Tests if update function works properly.
+   */
+  @Test
+  public void testUpdate() {
+
+    assertEquals("test stop 2", testVehicle.getNextStop().getName());
+    assertEquals(1, testVehicle.getNextStop().getId());
+    testVehicle.update();
+    assertEquals("test stop 1", testVehicle.getNextStop().getName());
+    assertEquals(0, testVehicle.getNextStop().getId());
+    testVehicle.update();
+    assertEquals("test stop 1", testVehicle.getNextStop().getName());
+    assertEquals(0, testVehicle.getNextStop().getId());
+    testVehicle.update();
+    assertEquals("test stop 2", testVehicle.getNextStop().getName());
+    assertEquals(1, testVehicle.getNextStop().getId());
+    testVehicle.update();
+    assertEquals(null, testVehicle.getNextStop());
 
   }
+
+  /**
+   * Test if unloadPassengers works properly.
+   */
+  @Test
+  public void testUnloadPassengers() {
+    assertEquals(0, testVehicle.unloadPassengers());
+  }
+
+  /**
+   * Test if generateObservedText works properly.
+   */
+  @Test
+  public void testGenerateObservedText() {
+    assertEquals("", testVehicle.getObservedText());
+  }
+
+  /**
+   * Clean up our variables after each test.
+   */
+  @AfterEach
+  public void cleanUpEach() {
+    testVehicle = null;
+    testRouteIn = null;
+    testRouteOut = null;
+    testLine = null;
+  }
+
 }

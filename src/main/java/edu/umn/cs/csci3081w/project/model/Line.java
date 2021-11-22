@@ -91,4 +91,6 @@ public class Line {
   public void decreaseTimeToRestart() {
     this.timeToRestart--;
   }
+
 }
+
